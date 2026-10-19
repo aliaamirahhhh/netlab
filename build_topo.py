@@ -59,6 +59,8 @@ def check(spec):
     problems = []
     exist = {}
     # TODO: your code here
+
+    #Check for duplicate address
     for host in spec["hosts"]:
         for key in ("ip", "ipv6"):
             if key not in host:
@@ -71,6 +73,16 @@ def check(spec):
 
             else:
                 exist[address] = host["name"]
+
+    #Check every link refers to existing host or switch
+    existing_node = {node ["name"] for node in spec["hosts"] } | set (spec["switches"])
+
+    for a, b in spec["links"]:
+        if a not in existing_node:
+            problems.append(f"Link to {a} does not exist.")
+
+        if b not in existing_node:
+            problems.append(f"Link to {b} does not exist.")
                 
     return problems
 

@@ -1,0 +1,6 @@
+PROBLEM: h6 and h1 use the same address 10.80.0.1
+PROBLEM: h6 and h1 use the same address fd00:2380::1
+PROBLEM: Link to s9 does not exist.
+PROBLEM: Link to s4 does not exist.
+PROBLEM: Link to s5 does not exist.
+Fix the description and try again.
