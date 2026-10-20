@@ -1,0 +1,29 @@
+# page.yaml: the words on your page, kept as data like everything else.
+# make_page.py puts each answer under its question. A few sentences each, in your own words;
+# leave a blank line between paragraphs. Refer to YOUR network and YOUR evidence.
+# Never put your name or full student ID here: the page is public.
+
+repository: https://github.com/aliaamirahhhh/netlab.git
+
+answers:
+  planes:
+    question: "Where are the data, control and management planes in your network?"
+    answer: "Data Plane: In the switches, when forwarding the Ethernet frames between hosts \n\n Control Plane: The Linux bridge switches learn the MAC addresses dynamically \n\n Management Plane: The configuration and managing the network like with build_topo.py and topology.yaml"
+  learning:
+    question: "How did your switches learn which port leads to each host? Use your MAC table evidence."
+    answer: "The sh brctl showmacs s# shows the switch's MAC table. Initally the MAC table is empty until a ping is sent. When a frame arrives, the switch records the source MAC address and the port it arrives at."
+  kind:
+    question: "Which of the four kinds of programmability is this assignment (a network described as data, then built and documented by scripts)? Why isn't it any of the other three?"
+    answer: "Automated configuration management. The network is already described in topology.yaml, then the scripts help validate and document it automatically \n\n X Programmable Data Plane: We do not change how packets are processed \n\n X Externalised Control Plane: No use of externalised control plane to make forwarding decisions \n\n X Programmatic Device Interfaces: No devices are configured through APIs"
+  two_am:
+    question: "Week 1's 2 a.m. change on 40 switches: what would be different if those switches were described like your network?"
+    answer: "It would be much more faster and efficient, with less human errors and more consistent changes."
+  model:
+    question: "What's the difference between your network's data model and its serialisation? Use YAML and JSON as the example."
+    answer: "The data model is the structure of the information including the device's name and interfaces and IP addresses, while the serialisation is the way it is written. While YAML and JSON have differnt syntax, the network structure still stays the same."
+  check:
+    question: "Why is it better to catch bad data in check() than with pingall? What did IPv6 notice about a duplicate address that IPv4 didn't?"
+    answer: "The use of check() is carefully curated to handle and identify errors such as duplicate addresses or links to nonexistent devices, while pingall cannot detect its main cause. \n\n IPv6 marks duplicate addresses using dadfailed, which uses Duplicate Address Detection in contrast to IPv4."
+  git:
+    question: "What does your Git history give you that copying files into folders named topology-v2-final wouldn't?"
+    answer: "Git history records every commited change, what is changed and when. With the use of git diff, it also allows to compare between the current and previous version."
