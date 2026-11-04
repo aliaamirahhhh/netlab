@@ -66,6 +66,7 @@ def routing_tables_section(spec):
     Use esc() on every value.
     """
     sections = []
+    address_plan = plan(spec)
 
     for router in spec["routers"]:
         # Get directly connected networks
