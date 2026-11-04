@@ -1,0 +1,27 @@
+==r1
+10.80.1.0/24 dev r1-eth0 proto kernel scope link src 10.80.1.1 
+10.80.2.0/24 via 10.80.12.2 dev r1-eth1 
+10.80.12.0/30 dev r1-eth1 proto kernel scope link src 10.80.12.1 
+10.80.13.0/30 dev r1-eth2 proto kernel scope link src 10.80.13.1 
+10.80.32.0/23 via 10.80.12.2 dev r1-eth1 
+==r2
+10.80.1.0/24 via 10.80.12.1 dev r2-eth1 
+10.80.2.0/24 via 10.80.24.2 dev r2-eth2 
+10.80.12.0/30 dev r2-eth1 proto kernel scope link src 10.80.12.2 
+10.80.24.0/30 dev r2-eth2 proto kernel scope link src 10.80.24.1 
+10.80.32.0/24 dev r2-eth0 proto kernel scope link src 10.80.32.1 
+10.80.33.0/24 via 10.80.24.2 dev r2-eth2 
+==r3
+10.80.1.0/24 via 10.80.13.1 dev r3-eth1 
+10.80.2.0/24 via 10.80.34.2 dev r3-eth2 
+10.80.13.0/30 dev r3-eth1 proto kernel scope link src 10.80.13.2 
+10.80.32.0/24 via 10.80.34.2 dev r3-eth2 
+10.80.33.0/24 dev r3-eth0 proto kernel scope link src 10.80.33.1 
+10.80.34.0/30 dev r3-eth2 proto kernel scope link src 10.80.34.1 
+==r4
+10.80.1.0/24 via 10.80.24.1 dev r4-eth1 
+10.80.2.0/24 dev r4-eth0 proto kernel scope link src 10.80.2.1 
+10.80.24.0/30 dev r4-eth1 proto kernel scope link src 10.80.24.2 
+10.80.32.0/24 via 10.80.24.1 dev r4-eth1 
+10.80.33.0/24 via 10.80.34.1 dev r4-eth2 
+10.80.34.0/30 dev r4-eth2 proto kernel scope link src 10.80.34.2 

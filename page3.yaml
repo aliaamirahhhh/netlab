@@ -1,0 +1,19 @@
+# page3.yaml: the words on your Week 3 page. make_page3.py puts each answer under its question.
+# A few sentences each, in your own words, about YOUR network and YOUR evidence.
+# Leave a blank line between paragraphs. Never put your name or full student ID here.
+
+repository: https://github.com/YOUR-USERNAME/YOUR-REPOSITORY
+
+answers:
+  design:
+    question: "Describe your design: why these routers, LANs and links, and how you chose the addresses."
+    answer: "My network consists of 4 routers, 4 LANs, and 4 links in between routers where each router acts as a gateway for its respective LAN. Each LAN also uses a different subnet to avoid address conflicts. The square topology allows redundancy within the network."
+  summary:
+    question: "Which route summarises several LANs? Which networks does it cover, why is it correct, and what else would it attract if you added a network inside its range?"
+    answer: "The summarized route is 10.80.32.0/23 which covers h2 and h3 LANs with an address of 10.80.32.0/24 and 10.80.33.0/24 respectively. This allows addresses within the range of 10.80.32.0 - 10.80.33.255 to be matched by a single route."
+  failure:
+    question: "When you took a link down, what happened, and why couldn't your routes recover even though another path existed? What would have recovered?"
+    answer: "Communication between some hosts failed because most static routes depended on that link since static routes do not automatically discover alternative paths or update whenever a link fails. A dynamic routing protocol such as OSPF would have detected the link failure and recalculate the best path to use."
+  control_plane:
+    question: "In your network, what was the control plane? Who worked out the routes, and what does that mean for a network of 40 routers?"
+    answer: "The control plane for this case was the static routing manually configured in network.yaml. Although it may be time-consuming and more prone to errors when managing 40 routers at once. "

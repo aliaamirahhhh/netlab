@@ -1,0 +1,10 @@
+PROBLEM: h1 to h4: r2 has no route to 10.80.2.10
+PROBLEM: h2 to h4: r2 has no route to 10.80.2.10
+Fix the description and try again: nothing was built.
+PROBLEM: h1 to h3: r4 has no route to 10.80.33.10
+PROBLEM: h2 to h3: r4 has no route to 10.80.33.10
+PROBLEM: h3 to h2: r4 has no route to 10.80.32.10
+PROBLEM: h4 to h1: r4 has no route to 10.80.1.10
+PROBLEM: h4 to h2: r4 has no route to 10.80.32.10
+PROBLEM: h4 to h3: r4 has no route to 10.80.33.10
+Fix the description and try again: nothing was built.
