@@ -178,6 +178,17 @@ def check_mtu(spec):
     """
     problems = []
     # TODO: your code here
+
+    underlay_mtu = int(spec["underlay"]["mtu"])
+
+    for tenant in spec["tenants"]:
+        tenant_mtu = int(tenant["mtu"])
+        required_mtu = tenant_mtu + VXLAN_OVERHEAD
+        
+        if required_mtu > underlay_mtu:
+            excess = required_mtu - underlay_mtu
+            problems.append(f"tenant {tenant['name']}: MTU {tenant_mtu} + VXLAN overhead {VXLAN_OVERHEAD} exceeds underlay MTU {underlay_mtu} by {excess} bytes")
+        
     return problems
 
 
@@ -237,7 +248,6 @@ def tenant_commands(spec, hv, tenant):
         cmds.append(f"bridge fdb append 00:00:00:00:00:00 dev {vxlan} dst {remote_ip}")
 
     return cmds
-
 
 def all_commands(spec):
     """{hypervisor: [commands]} for the whole design, from tenant_commands()."""

@@ -31,7 +31,7 @@ tenants:
   - name: miffy
     vni: 100
     network: 10.80.50.0/24
-    mtu: 1500                  # the largest IP packet this tenant's VMs send
+    mtu: 1450                  # the largest IP packet this tenant's VMs send
     vms:                       # [VM name, the hypervisor it runs on]
       - [miffy1, hv1]
       - [miffy2, hv2]
@@ -40,7 +40,7 @@ tenants:
   - name: snoopy
     vni: 200
     network: 10.80.50.0/24      # the same addresses as red, on purpose
-    mtu: 1500
+    mtu: 1450
     vms:
       - [snoopy1, hv1]
       - [snoopy2, hv2]
