@@ -1,0 +1,39 @@
+# page6.yaml: the words on your Week 6 page. make_page6.py puts each answer under its question.
+# A few sentences each, in your own words, about YOUR overlay and YOUR evidence.
+# Leave a blank line between paragraphs. Don't put your name or your full student ID in this file.
+
+repository: https://github.com/aliaamirahhhh/netlab
+
+answers:
+  design:
+    question: "Describe your design: hypervisors, tenants, VNIs and addresses. Which tenants overlap, and why did you place each VM where you did?"
+    answer: |
+      My design has three hypervisors named hv1 (10.80.0.1), hv2(10.80.0.2), and hv3(10.80.0.3). I have two tenants: miffy and snoopy, and each with its own VNI of 100 and 200 for miffy and snoopy respectively. Both tenants use the same network address range of 10.80.50.0/24.
+      Miffy has miffy1 (10.80.50.10) on hv1, miffy2 (10.80.50.11) on hv2, and miffy3 (10.80.50.12) on hv3. While snoopy has snoopy1 (10.80.50.10) on hv1 and snoopy2 (10.80.50.11) on hv2.
+      As we can see, both tenants overlap in the same network address range intentionally to demonstrate that separate VNIs allow differnt tenants to reuse the same address space. VMs are placed on different hypervisors to test communication through the VXLAN tunnel, while keeping both tenants isolated from each other.
+
+  isolation:
+    question: "Two of your VMs have the same IP address. Using your evidence, explain how a ping reaches the right one â€” and what would have to go wrong for one tenant to see another's traffic."
+    answer: |
+      While both miffy2 and snoopy2 have the same IP address of 10.80.50.11, they are differentiated by their VNIs where miffy uses VNI 100 while snoopy uses VNI 200. For instance, from evidence isolation.txt, when miffy1 pings 10.80.50.11, the packet is encapsulated with VNI 100 and is correctly sent to miffy2, while snoopy2 will not receive the packet.
+      One tenant could see another's traffic if the VNI or bridge configuration were incorrectly set, or if there was a misconfiguration in the VXLAN tunnel that allowed traffic from one VNI to leak into another, or if there was a routing issue that caused packets to be sent to the wrong hypervisor.
+
+  flood_learn:
+    question: "Using your evidence, explain what was flooded, to which hypervisors, and what each VTEP learned. With 50 hypervisors in one VNI, how many copies would one broadcast need â€” and how would EVPN change that?"
+    answer: |
+      Before traffic was generated, the VTEPs flooded ARP requests to all hypervisors in the same VNI. For example, when miffy1 sent an ARP request for 10.80.50.11, it initially did not know the destination MAC address, so it was flooded to all hypervisors in the VNI.
+      From the tcpdump on hv3, the hv3 received a VXLAN packet on UDP port 4789 with VNI 100, even though miffy2 was located on hv2.
+      With 50 hypervisors in one VNI, a broadcast would need to be sent to all 50 hypervisors, resulting in 50 copies of the broadcast packet. EVPN would change that by using a control plane such as BGP to advertise MAC addresses and IP addresses, allowing VTEPs to know where to send traffic without flooding, thus reducing unnecessary broadcast traffic.
+
+  mtu:
+    question: "Compare your two MTU fixes using your measurements. Which would you choose for a data centre, what does each cost, and who has to change what?"
+    answer: |
+      Fix A reduces the tenant MTU from 1500 to 1450, while Fix B increases the underlay MTU from 1500 to 9000. 
+      For Fix A, a ping of 1422 bytes was successful, while a ping of 1423 bytes failed. For Fix B, a ping of 1472 bytes was successful, while a ping of 1473 bytes failed. From the iperf3 results, Fix A had an average throughput of 5.16 Gbps, while Fix B had a throughput of 5.67 Gbps.
+      In my opinion, Fix B is a better choice for a data centre because it allows for larger packets to be sent across the underlay network, which can improve performance for applications that require high throughput. However, Fix B requires changes to the underlay network configuration, which may involve updating switch configurations and ensuring that all devices in the path support the larger MTU. Fix A is simpler to implement as it only requires changes to the tenant's VM configurations, but it limits the maximum packet size that can be sent by the tenants.
+      
+  p4:
+    question: "If your hypervisors' VTEPs were P4 switches running the lecture's vtep.p4, what would have to fill the vtep_encap table, and how? What would replace flood-and-learn?"
+    answer: |
+      The vtep_encap table would need to be filled with entries that map the destination MAC addresses of the VMs to their corresponding VTEP IP addresses and VNIs. This could be done through a control plane protocol such as BGP EVPN, which would advertise the MAC addresses and their associated VTEP IPs and VNIs to all VTEPs in the network.
+      Instead of using flood-and-learn, the VTEPs would use the information in the vtep_encap table to directly forward packets to the correct VTEP based on the destination MAC address and VNI. This would eliminate the need for flooding ARP requests and learning MAC addresses through broadcast traffic, resulting in more efficient and scalable forwarding of traffic in the data centre network.
